@@ -12,6 +12,8 @@
 
 #include "mh/mh_config_system.h"
 
+#define UNKNOWN_APPLICATION NULL
+
 /******************************************************************************
  * @brief entry for application list
  *****************************************************************************/
@@ -24,7 +26,7 @@ typedef struct mh_application_node
 /******************************************************************************
  * @brief appends application to list of startup applications
  *****************************************************************************/
-void mh_append_startup_application(struct application_node* node);
+void mh_append_startup_application(struct mh_application_node* node);
 
 /******************************************************************************
  * @brief method returns specific application based on name

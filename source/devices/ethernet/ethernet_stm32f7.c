@@ -10,6 +10,8 @@
 #include "mh/error_handler/error_handler.h"
 #include "stm32f7xx_hal.h"
 
+extern void user_eth_rx_cplt_callback(ETH_HandleTypeDef* ethHandle);
+
 #if MH_ETHERNET_ENABLE_DMA
 #if defined ( __GNUC__ )
 
@@ -45,6 +47,47 @@ unsigned char g_mh_eth_tx_buffers[MH_ETHERNET_DMA_TX_BUF_N][MH_ETHERNET_TX_BUF_S
  * @brief:    global ethernet handle
  ****************************************************************************/
 ETH_HandleTypeDef g_mh_eth_handle;
+
+/******************************************************************************
+ * @variable g_mh_ethernet_private
+ * @brief global ethernet private data
+ *****************************************************************************/
+mh_ethernet_private_t g_mh_ethernet_private = {
+		{MH_ETHERNET_MAC_ADDR0,
+		 MH_ETHERNET_MAC_ADDR1,
+		 MH_ETHERNET_MAC_ADDR2,
+		 MH_ETHERNET_MAC_ADDR3,
+		 MH_ETHERNET_MAC_ADDR4,
+		 MH_ETHERNET_MAC_ADDR5},
+		&g_mh_eth_handle
+};
+
+/******************************************************************************
+ * @method HAL_ETH_RxCpltCallback
+ * @brief method called when ethernet completed receiving packets
+ * @param heth - handle to ETH_HandleTypeDef
+ * @return None
+ *****************************************************************************/
+#ifdef MH_ETHERNET_ENABLE_IRQ
+void HAL_ETH_RxCpltCallback(ETH_HandleTypeDef *heth)
+{
+	user_eth_rx_cplt_callback(heth);
+}
+#endif
+
+/******************************************************************************
+ * @method ETH_IRQHandler
+ * @brief ethernet interrupt handler
+ * @param None
+ * @return None
+ *****************************************************************************/
+#ifdef MH_ETHERNET_ENABLE_IRQ
+void ETH_IRQHandler(void)
+{
+	HAL_ETH_IRQHandler(&g_mh_eth_handle);
+}
+#endif
+
 
 /*****************************************************************************
  * @method: HAL_ETH_MspInit
@@ -89,15 +132,8 @@ void HAL_ETH_MspInit(ETH_HandleTypeDef *heth)
 
 void _mh_ethernet_init_eth_handle()
 {
-	uint8_t macaddres [] = {MH_ETHERNET_MAC_ADDR0,
-			MH_ETHERNET_MAC_ADDR1,
-			MH_ETHERNET_MAC_ADDR2,
-			MH_ETHERNET_MAC_ADDR3,
-			MH_ETHERNET_MAC_ADDR4,
-			MH_ETHERNET_MAC_ADDR5};
-
 	g_mh_eth_handle.Instance = ETH;
-	g_mh_eth_handle.Init.MACAddr = macaddres;
+	g_mh_eth_handle.Init.MACAddr = g_mh_ethernet_private.macAddr;
 	g_mh_eth_handle.Init.AutoNegotiation = MH_ETHERNET_AUTONEGOTIATION;
 	g_mh_eth_handle.Init.Speed = MH_ETHERNET_SPEED;
 	g_mh_eth_handle.Init.DuplexMode = MH_ETHERNET_DUPLEX_MODE;
@@ -112,7 +148,7 @@ enum MHDeviceState mh_f7_ethernet_init(void* arg)
 	pmh_device_t mh_dev = (pmh_device_t)arg;
 	enum MHDeviceState result = eDSError;
 
-	mh_dev->private_data = &g_mh_eth_handle;
+	mh_dev->private_data = &g_mh_ethernet_private;
 
 	_mh_ethernet_init_eth_handle();
 

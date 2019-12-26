@@ -11,6 +11,9 @@
 #include "mh/devices/device.h"
 #include "mh/devices/device_list.h"
 #include "mh/devices/device_state.h"
+#include "mh/devices/ethernet/ethernet_private.h"
+#include "stm32f7xx_hal.h"
+#include "stm32f7xx_hal_eth.h"
 
 #ifdef ETHERNET_DEVICE
 #undef ETHERNET_DEVICE
@@ -48,7 +51,7 @@ enum MHDeviceState mh_f7_ethernet_stop(void* arg);
 	&mh_f7_ethernet_stop, \
 	eDSUnknown ,\
 	0, \
-	"F7ETHERNET" }
+	"ETHERNET" }
 #endif
 
 #endif /* MH_ETHERNET_STM32F7_H_ */

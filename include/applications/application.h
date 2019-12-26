@@ -70,7 +70,8 @@ typedef struct
 	mh_application_init_clb_t init;
 	mh_application_start_clb_t start;
 	mh_application_stop_clb_t stop;
-	pmh_fr_thread_t thread;
+	void* private_data;
+	pmh_fr_thread_node_t thread;
 	enum MHApplicationState state;
 	int last_error;
 } mh_application_t, *pmh_application_t;
@@ -79,21 +80,24 @@ typedef struct
  * @method: MH_APPLICATION_INIT
  * @brief: macro used for calling mh_init_startup_applications
  * ***************************************************************************/
-#define MH_APPLICATION_INIT(X) if (((pmh_application_t)X)->init) \
+#define MH_APPLICATION_INIT(X) if (((pmh_application_t)X) && \
+							  ((pmh_application_t)X)->init) \
 						  	  ((pmh_application_t)X)->state = ((pmh_application_t)X)->init((pmh_application_t)X)
 
 /* ****************************************************************************
  * @method: MH_APPLICATION_START
  * @brief: macro used for calling mh_start_startup_applications
  * ***************************************************************************/
-#define MH_APPLICATION_START(X) if (((pmh_application_t)X)->start) \
+#define MH_APPLICATION_START(X) if (((pmh_application_t)X) && \
+							   ((pmh_application_t)X)->start) \
 							   ((pmh_application_t)X)->state = ((pmh_application_t)X)->start((pmh_application_t)X)
 
 /* ****************************************************************************
  * @method: MH_APPLICATION_STOP
  * @brief: macro used for calling mh_stop_startup_applications
  * ***************************************************************************/
-#define MH_APPLICATION_STOP(X) if (((pmh_application_t)X)->stop) \
+#define MH_APPLICATION_STOP(X) if (((pmh_application_t)X) && \
+							   ((pmh_application_t)X)->stop) \
 							   ((pmh_application_t)X)->state = ((pmh_application_t)X)->stop((pmh_application_t)X)
 
 #endif /* MH_APPLICATION_H_ */

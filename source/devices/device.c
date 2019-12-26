@@ -26,7 +26,7 @@ void mh_init_startup_devices(void)
 	{
 		pmh_device_t dev = &node->device;
 		MH_DEVICE_INIT(dev);
-		if (dev->state != eDSInitialized)
+		if (dev && dev->state != eDSInitialized)
 		{
 			Log_Init_Error(dev->name, dev->last_error);
 		}
@@ -43,7 +43,7 @@ void mh_start_startup_devices(void)
 	{
 		pmh_device_t dev = &node->device;
 		MH_DEVICE_START(dev);
-		if (dev->state != eDSStarted)
+		if (dev && dev->state != eDSStarted)
 		{
 			Log_Startup_Error(dev->name, dev->last_error);
 		}
@@ -60,7 +60,7 @@ void mh_stop_startup_devices(void)
 	{
 		pmh_device_t dev = &node->device;
 		MH_DEVICE_STOP(dev);
-		if (dev->state != eDSStopped)
+		if (dev && dev->state != eDSStopped)
 		{
 			Log_Stop_Error(dev->name, dev->last_error);
 		}
@@ -72,6 +72,18 @@ void mh_stop_startup_devices(void)
 pmh_device_t mh_device_startup_get_by_name(char* name)
 {
 	pmh_device_t result = NULL;
+	struct mh_device_node* node = &g_user_devices;
 
+	while(node)
+	{
+		result = &node->device;
+
+		if (result && (strcmp(result->name, name) == 0))
+		{
+			break;
+		}
+
+		node = node->next;
+	}
 	return result;
 }

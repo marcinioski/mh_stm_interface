@@ -69,12 +69,12 @@
  * @param: MH_ETHERNET_MAC_ADDRX
  * @brief: ethernet mac addres one byte
  * ***************************************************************************/
-#define MH_ETHERNET_MAC_ADDR0 0x00
-#define MH_ETHERNET_MAC_ADDR1 0x00
-#define MH_ETHERNET_MAC_ADDR2 0x00
-#define MH_ETHERNET_MAC_ADDR3 0x00
-#define MH_ETHERNET_MAC_ADDR4 0x00
-#define MH_ETHERNET_MAC_ADDR5 0x00
+#define MH_ETHERNET_MAC_ADDR0 0x01
+#define MH_ETHERNET_MAC_ADDR1 0x20
+#define MH_ETHERNET_MAC_ADDR2 0x22
+#define MH_ETHERNET_MAC_ADDR3 0x01
+#define MH_ETHERNET_MAC_ADDR4 0x01
+#define MH_ETHERNET_MAC_ADDR5 0x01
 
 /* ****************************************************************************
  * @param: MH_ETHERNET_AUTONEGTIATION

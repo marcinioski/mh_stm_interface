@@ -34,4 +34,20 @@ void mh_fr_start_kernel(void);
  * ***************************************************************************/
 unsigned char mh_fr_append_thread(pmh_fr_thread_t mh_thread);
 
+/******************************************************************************
+ * @method mh_fr_start_thread
+ * @brief method starts thread provided by user
+ * @param thr - thread to start
+ * @return 0 on success, positive number in otherwise
+ *****************************************************************************/
+unsigned char mh_fr_start_thread(pmh_fr_thread_t thr);
+
+/******************************************************************************
+ * @method mh_fr_start_thread_list
+ * @brief method starts thread list provide by user
+ * @param thrs - list of thread to start
+ * @return 0 on success, positive number otherwise
+ *****************************************************************************/
+unsigned char mh_fr_start_thread_list(pmh_fr_thread_node_t thrs);
+
 #endif /* MH_FREERTOS_API_H_ */

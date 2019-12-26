@@ -19,7 +19,7 @@ void mh_init_startup_applications(void)
 	{
 		pmh_application_t app = node->application;
 		MH_APPLICATION_INIT(app);
-		if (app->state != eASInitialized)
+		if (app && app->state != eASInitialized)
 		{
 			Log_Init_Error(app->name, app->last_error);
 		}
@@ -36,7 +36,7 @@ void mh_start_startup_applications(void)
 	{
 		pmh_application_t app = node->application;
 		MH_APPLICATION_START(app);
-		if (app->state != eASStarted)
+		if (app && app->state != eASStarted)
 		{
 			Log_Startup_Error(app->name, app->last_error);
 		}
@@ -53,7 +53,7 @@ void mh_stop_startup_applications(void)
 	{
 		pmh_application_t app = node->application;
 		MH_APPLICATION_STOP(app);
-		if (app->state != eASStopped)
+		if (app && app->state != eASStopped)
 		{
 			Log_Stop_Error(app->name, app->last_error);
 		}

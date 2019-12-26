@@ -89,21 +89,24 @@ void mh_stop_startup_devices(void);
  * @method: MH_DEVICE_INIT
  * @brief: macro used for calling mh_init_startup_devices
  * ***************************************************************************/
-#define MH_DEVICE_INIT(X) if (((pmh_device_t)X)->init) \
+#define MH_DEVICE_INIT(X) if (((pmh_device_t)X) &&\
+							  ((pmh_device_t)X)->init) \
 						  	  ((pmh_device_t)X)->state = ((pmh_device_t)X)->init((pmh_device_t)X)
 
 /* ****************************************************************************
  * @method: MH_DEVICE_START
  * @brief: macro used for calling mh_start_startup_devices
  * ***************************************************************************/
-#define MH_DEVICE_START(X) if (((pmh_device_t)X)->start) \
+#define MH_DEVICE_START(X) if (((pmh_device_t)X) && \
+							   ((pmh_device_t)X)->start) \
 							   ((pmh_device_t)X)->state = ((pmh_device_t)X)->start((pmh_device_t)X)
 
 /* ****************************************************************************
  * @method: MH_DEVICE_STOP
  * @brief: macro used for calling mh_stop_startup_devices
  * ***************************************************************************/
-#define MH_DEVICE_STOP(X) if (((pmh_device_t)X)->stop) \
-							   ((pmh_device_t)X)->state = ((pmh_device_t)X)->stop((pmh_device_t)X)
+#define MH_DEVICE_STOP(X) if (((pmh_device_t)X) && \
+							  ((pmh_device_t)X)->stop) \
+							  ((pmh_device_t)X)->state = ((pmh_device_t)X)->stop((pmh_device_t)X)
 
 #endif /* MH_DEVICE_H_ */
