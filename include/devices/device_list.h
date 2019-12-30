@@ -11,6 +11,7 @@
 #include "device.h"
 
 #define ETHERNET_DEVICE {0}
+#define USART_DEVICE {0}
 #define USB_DEVICE {0}
 #define I2C_DEVICE {0}
 #define SPI_DEVICE {0}
