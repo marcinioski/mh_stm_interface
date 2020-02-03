@@ -26,24 +26,52 @@
  * @brief variable runs specified usart clock
  *****************************************************************************/
 #define MH_USART_PERIPH_RCC_ENABLE3 __HAL_RCC_USART3_CLK_ENABLE()
+#define MH_USART_PERIPH_RCC_ENABLE4 __HAL_RCC_UART4_CLK_ENABLE()
 
 /******************************************************************************
  * @param MH_USART_PERIPH_RCC_DISABLEX
  * @brief variable stops specified usart clock
  *****************************************************************************/
 #define MH_USART_PERIPH_RCC_DISABLE3 __HAL_RCC_USART3_CLK_DISABLE()
+#define MH_USART_PERIPH_RCC_DISABLE4 __HAL_RCC_UART4_CLK_DISABLE()
 
 /******************************************************************************
  * @param MH_USART_TX_GPIO_RCC_ENABLEX
  * @brief variable runs specified usart tx gpio clock
  *****************************************************************************/
 #define MH_USART_TX_GPIO_RCC_ENABLE3 __HAL_RCC_GPIOD_CLK_ENABLE()
+#define MH_USART_TX_GPIO_RCC_ENABLE4 __HAL_RCC_GPIOD_CLK_ENABLE()
 
 /******************************************************************************
  * @param MH_USART_RX_GPIO_RCC_ENABLEX
  * @brief variable runs specified usart rx gpio clock
  *****************************************************************************/
 #define MH_USART_RX_GPIO_RCC_ENABLE3 __HAL_RCC_GPIOD_CLK_ENABLE()
+#define MH_USART_RX_GPIO_RCC_ENABLE4 __HAL_RCC_GPIOD_CLK_ENABLE()
+
+/******************************************************************************
+ * @param MH_USART_FORCE_RESET_X
+ * @brief variable specify usart reset mechanism
+ *****************************************************************************/
+#define MH_USART_FORCE_RESET3 __HAL_RCC_USART3_FORCE_RESET()
+
+/******************************************************************************
+ * @param MH_USART_RELEASE_RESET_X
+ * @brief variable release reset from usart device
+ *****************************************************************************/
+#define MH_USART_RELEASE_RESET3 __HAL_RCC_USART3_RELEASE_RESET()
+
+/******************************************************************************
+ * @param MH_USART_TIMEOUT_TRANSMIT
+ * @brief variable specify timeout for transmitting data
+ *****************************************************************************/
+#define MH_USART_TIMEOUT_TRANSMIT 0
+
+/******************************************************************************
+ * @parma MH_USART_TIMEOUT_RECEIVE
+ * @brief variable specify timeout for receiving data
+ *****************************************************************************/
+#define MH_USART_TIMEOUT_RECEIVE 0
 
 /******************************************************************************
  * @param MH_USART_TX_GPIO_RCC_DISABLEX
@@ -61,15 +89,32 @@
  * @param MH_ENABLE_USARTX
  * @brief variable enables usart device
  *****************************************************************************/
-#define MH_ENABLE_USART1 0
-#define MH_ENABLE_USART2 0
 #define MH_ENABLE_USART3 1
+#define MH_ENABLE_USART4 0
 
 /******************************************************************************
  * @param MH_ENABLE_USART_IRQ
  * @brief variable enable usart interrupt mode
  *****************************************************************************/
-#define MH_ENABLE_USART_IRQ 0
+#define MH_ENABLE_USART_IRQ 1
+
+/******************************************************************************
+ * @param MH_USART_IRQ_X
+ * @brief specify usart interrupt number
+ *****************************************************************************/
+#define MH_USART_IRQ3 USART3_IRQn
+
+/******************************************************************************
+ * @parm MH_USART_IRQ_PRIORITY_X
+ * @brief specify usart irq priority
+ *****************************************************************************/
+#define MH_USART_IRQ_PRIORITY3 2
+
+/******************************************************************************
+ * @parm MH_USART_IRQ_SUBPRIORITY_X
+ * @brief specify usart irq subpriority
+ *****************************************************************************/
+#define MH_USART_IRQ_SUBPRIORITY3 0
 
 /******************************************************************************
  * @param MH_ENABLE_USART_DMA

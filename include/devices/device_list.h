@@ -50,6 +50,6 @@ typedef struct mh_device_node
 {
 	mh_device_t device;
 	struct mh_device_node* next;
-};
+} mh_device_node_t, *pmh_device_node_t;
 
 #endif /* MH_DEVICES_DEVICE_LIST_H_ */
