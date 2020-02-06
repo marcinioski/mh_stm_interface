@@ -94,20 +94,11 @@ uint16_t _mh_usart_read(void* uartHandle, uint8_t* buffer, uint16_t buffer_size)
 }
 
 /******************************************************************************
- * @variable g_mh_usart_interface
- * @brief global usart interface structure
- *****************************************************************************/
-mh_usart_interface_t g_mh_usart_interface = {
-		&_mh_usart_write,
-		&_mh_usart_read
-};
-
-/******************************************************************************
  * @variable g_mh_usart_private
  * @brief global usart private data
  *****************************************************************************/
 mh_usart_private_t g_mh_usart_private = {
-	&g_mh_usart_interface
+	NULL
 #if MH_ENABLE_USART3
 	, &g_mh_uart3_handle
 #endif
@@ -256,6 +247,28 @@ enum MHDeviceState mh_f7_usart_stop(void* arg)
 		}
 	}
 #endif
+
+	return result;
+}
+
+enum MHDeviceState mh_f7_usart_read(char* buffer, const size_t buffer_len, size_t* len)
+{
+	enum MHDeviceState result = eDSError;
+
+	return result;
+}
+
+enum MHDeviceState mh_f7_usart_write(const char* buffer, const size_t buffer_len, size_t* len)
+{
+	enum MHDeviceState result = eDSError;
+
+	return result;
+}
+
+enum MHDeviceState mh_f7_usart_signal(unsigned int signal)
+{
+	(void)signal;
+	enum MHDeviceState result = eDSPermitted;
 
 	return result;
 }

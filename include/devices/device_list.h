@@ -21,6 +21,7 @@
 #include "mh/mh_config_system.h"
 
 #include "mh/devices/ethernet/ethernet.h"
+#include "mh/devices/usart/usart.h"
 
 /*
  * TODO: list of device_fX files surrounded with #ifdef

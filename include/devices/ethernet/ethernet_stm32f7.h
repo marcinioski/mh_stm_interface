@@ -45,13 +45,21 @@ enum MHDeviceState mh_f7_ethernet_start(void* arg);
  * ***************************************************************************/
 enum MHDeviceState mh_f7_ethernet_stop(void* arg);
 
+
+
 #define ETHERNET_DEVICE { \
 	&mh_f7_ethernet_init, \
 	&mh_f7_ethernet_start, \
 	&mh_f7_ethernet_stop, \
-	eDSUnknown ,\
+	{ \
+		NULL, \
+		NULL, \
+		NULL \
+	}, \
 	0, \
-	"ETHERNET" }
+	NULL, \
+	"ETHERNET", \
+	eDSUnknown }
 #endif
 
 #endif /* MH_ETHERNET_STM32F7_H_ */

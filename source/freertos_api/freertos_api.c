@@ -8,11 +8,14 @@
 #include "mh/freertos_api/freertos_api.h"
 #include "mh/error_handler/error_codes.h"
 
-/* ****************************************************************************
+#if 0
+/**
+ * ****************************************************************************
  * @variable: mh_fr_threads_start_list
  * @brief:    list of threads to start during free rtos setting up
  * ***************************************************************************/
 static pmh_fr_thread_t mh_fr_threads_start_list;
+#endif
 
 
 void mh_fr_start_kernel(void)

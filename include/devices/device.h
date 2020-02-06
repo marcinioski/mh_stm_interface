@@ -9,6 +9,7 @@
 #define MH_DEVICE_H_
 
 #include "device_state.h"
+#include "mh/devices/device_io.h"
 
 /* ****************************************************************************
  * @param: MH_DEVICES_MAX
@@ -55,10 +56,11 @@ typedef struct
 	mh_device_init_clb_t init;
 	mh_device_start_clb_t start;
 	mh_device_stop_clb_t stop;
-	enum MHDeviceState state;
+	mh_device_io_t io;
 	unsigned int last_error;
 	void* private_data;
 	char name[MH_DEVICE_NAME_MAX_LEN];
+	enum MHDeviceState state;
 } mh_device_t, *pmh_device_t;
 
 /* ****************************************************************************
@@ -108,5 +110,38 @@ void mh_stop_startup_devices(void);
 #define MH_DEVICE_STOP(X) if (((pmh_device_t)X) && \
 							  ((pmh_device_t)X)->stop) \
 							  ((pmh_device_t)X)->state = ((pmh_device_t)X)->stop((pmh_device_t)X)
+
+/**
+ ******************************************************************************
+ * @method MH_DEVICE_IO_READ
+ * @brief macro used for calling read method on device
+ ******************************************************************************
+ */
+#define MH_DEVICE_IO_READ(X, BUFFER, BUFFER_LEN, LEN) do { \
+	if (((pmh_device_t)X)->io.read) \
+			((pmh_device_t)X)->state = ((pmh_device_t)X)->io.read(BUFFER, BUFFER_LEN, LEN); \
+	}while(0)
+
+/**
+ ******************************************************************************
+ * @method MH_DEVICE_IO_WRITE
+ * @brief macro used for calling write method on device
+ ******************************************************************************
+ */
+#define MH_DEVICE_IO_WRITE(X, BUFFER, BUFFER_LEN, LEN) do { \
+	if (((pmh_device_t)X)->io.write) \
+			((pmh_device_t)X)->state = ((pmh_device_t)X)->io.write(BUFFER, BUFFER_LEN, LEN); \
+	}while(0)
+
+/**
+ ******************************************************************************
+ * @method MH_DEVICE_IO_SIGNAL
+ * @brief macro used for calling signal method on device
+ ******************************************************************************
+ */
+#define MH_DEVICE_IO_SIGNAL(X, SIGNAL) do { \
+	if (((pmh_device_t)X)->io.signal) \
+			((pmh_device_t)X)->state = ((pmh_device_t)X)->io.signal(SIGNAL); \
+	}while(0)
 
 #endif /* MH_DEVICE_H_ */

@@ -18,6 +18,7 @@ enum MHDeviceState
 	eDSInitialized,
 	eDSStarted,
 	eDSStopped,
+	eDSPermitted,
 	eDSError = 255
 };
 

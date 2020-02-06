@@ -44,13 +44,53 @@ enum MHDeviceState mh_f7_usart_start(void* arg);
  * ***************************************************************************/
 enum MHDeviceState mh_f7_usart_stop(void* arg);
 
+/**
+ ******************************************************************************
+ * @method mh_f7_usart_write
+ * @brief method is used to writing data to usart device
+ * @param buffer - pointer to data
+ * @param buffer_len - length of data to write
+ * @param len - len of write data
+ * @return device state
+ ******************************************************************************
+ */
+enum MHDeviceState mh_f7_usart_write(const char* buffer, const size_t buffer_len, size_t* len);
+
+/**
+ ******************************************************************************
+ * @method mh_f7_usart_read
+ * @brief method is used to reading data from usart device
+ * @param buffer - pointer to data
+ * @param buffer_len - length of buffer
+ * @param len - len of read data
+ * @return device state
+ ******************************************************************************
+ */
+enum MHDeviceState mh_f7_usart_read(char* buffer, const size_t buffer_len, size_t* len);
+
+/**
+ ******************************************************************************
+ * @method mh_f7_usart_signal
+ * @brief method is used to send signals to usart device
+ * @param signal - signal id
+ * @return device state
+ ******************************************************************************
+ */
+enum MHDeviceState mh_f7_usart_signal(unsigned int signal);
+
 #define USART_DEVICE { \
 	&mh_f7_usart_init, \
 	&mh_f7_usart_start, \
 	&mh_f7_usart_stop, \
-	eDSUnknown ,\
+	{ \
+		&mh_f7_usart_read, \
+		&mh_f7_usart_write, \
+		&mh_f7_usart_signal \
+	}, \
 	0, \
-	"USART" }
+	NULL, \
+	"USART", \
+	eDSUnknown }
 #endif
 
 #ifdef UART_DEVICE

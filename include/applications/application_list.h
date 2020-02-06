@@ -21,7 +21,7 @@ typedef struct mh_application_node
 {
 	pmh_application_t application;
 	struct mh_application_node* next;
-};
+} mh_application_node_t, *pmh_application_node_t;
 
 /******************************************************************************
  * @brief appends application to list of startup applications

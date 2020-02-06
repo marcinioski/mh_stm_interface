@@ -9,6 +9,7 @@
 #define MH_APPLICATION_H_
 
 #include "mh/applications/application_state.h"
+#include "mh/applications/application_io.h"
 #include "mh/freertos_api/freertos_thread.h"
 
 /******************************************************************************
@@ -70,6 +71,7 @@ typedef struct
 	mh_application_init_clb_t init;
 	mh_application_start_clb_t start;
 	mh_application_stop_clb_t stop;
+	pmh_application_io_t io;
 	void* private_data;
 	pmh_fr_thread_node_t thread;
 	enum MHApplicationState state;
