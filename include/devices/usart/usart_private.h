@@ -14,16 +14,17 @@ typedef struct
 {
 	void* private;
 #if MH_ENABLE_USART1
-	void* usart1_handle;
+	mh_device_node_t usart1;
 #endif
 
 #if MH_ENABLE_USART2
-	void* usart2_handle;
+	mh_device_node_t usart2;
 #endif
 
 #if MH_ENABLE_USART3
-	void* usart3_handle;
+	mh_device_private_t usart3;
 #endif
+
 } mh_usart_private_t, *pmh_usart_private_t;
 
 #endif /* MH_USART_PRIVATE_H_ */

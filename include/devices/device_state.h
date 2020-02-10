@@ -19,6 +19,8 @@ enum MHDeviceState
 	eDSStarted,
 	eDSStopped,
 	eDSPermitted,
+	eDSNoData,
+	eDSSuccess = 254,
 	eDSError = 255
 };
 

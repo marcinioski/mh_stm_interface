@@ -184,6 +184,7 @@ mh_application_t app_http_server = {
 	&app_http_server_init,
 	&app_http_server_start,
 	&app_http_server_stop,
+	NULL,
 	&app_http_server_private,
 	&app_http_server_thread_list,
 	eASUnknown,

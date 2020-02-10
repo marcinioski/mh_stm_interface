@@ -15,11 +15,13 @@ extern void user_usart_tx_cplt_callback(UART_HandleTypeDef*);
 
 extern void user_usart_error_callback(UART_HandleTypeDef*);
 
+#if MH_ENABLE_USART3
 /******************************************************************************
  * @variable g_mh_uart3_handle
  * @brief global uart handle
  *****************************************************************************/
 UART_HandleTypeDef g_mh_uart3_handle;
+#endif
 
 #if MH_ENABLE_USART
 /******************************************************************************
@@ -100,7 +102,10 @@ uint16_t _mh_usart_read(void* uartHandle, uint8_t* buffer, uint16_t buffer_size)
 mh_usart_private_t g_mh_usart_private = {
 	NULL
 #if MH_ENABLE_USART3
-	, &g_mh_uart3_handle
+	, {
+		&g_mh_uart3_handle,
+		1
+	}
 #endif
 
 #if MH_ENABLE_USART4
@@ -179,7 +184,7 @@ enum MHDeviceState mh_f7_usart_init(void* arg)
 
 #if MH_ENABLE_USART3
 	{
-		UART_HandleTypeDef* handle = g_mh_usart_private.usart3_handle;
+		UART_HandleTypeDef* handle = g_mh_usart_private.usart3.periph_specific;
 		handle->Init.BaudRate = MH_USART_BAUD_RATE3;
 		handle->Init.WordLength = MH_USART_WORD_LENGTH3;
 		handle->Init.StopBits = MH_USART_STOP_BITS3;
@@ -232,7 +237,7 @@ enum MHDeviceState mh_f7_usart_stop(void* arg)
 
 #if MH_ENABLE_USART3
 	{
-		UART_HandleTypeDef* handle = g_mh_usart_private.usart3_handle;
+		UART_HandleTypeDef* handle = g_mh_usart_private.usart3.periph_specific;
 		MH_USART_PERIPH_RCC_DISABLE3;
 		MH_USART_TX_GPIO_RCC_DISABLE3;
 		MH_USART_RX_GPIO_RCC_DISABLE3;
@@ -251,21 +256,35 @@ enum MHDeviceState mh_f7_usart_stop(void* arg)
 	return result;
 }
 
-enum MHDeviceState mh_f7_usart_read(char* buffer, const size_t buffer_len, size_t* len)
+enum MHDeviceState mh_f7_usart_read(void* handle, char* buffer, const size_t buffer_len, size_t* len)
 {
-	enum MHDeviceState result = eDSError;
+	enum MHDeviceState result = eDSSuccess;
+
+	*len = _mh_usart_read(handle, buffer, buffer_len);
+
+	if (*len <= 0)
+	{
+		result = eDSNoData;
+	}
 
 	return result;
 }
 
-enum MHDeviceState mh_f7_usart_write(const char* buffer, const size_t buffer_len, size_t* len)
+enum MHDeviceState mh_f7_usart_write(void* handle, const char* buffer, const size_t buffer_len, size_t* len)
 {
-	enum MHDeviceState result = eDSError;
+	enum MHDeviceState result = eDSSuccess;
+
+	*len = _mh_usart_write(handle, buffer, buffer_len);
+
+	if (*len <= 0)
+	{
+		result = eDSNoData;
+	}
 
 	return result;
 }
 
-enum MHDeviceState mh_f7_usart_signal(unsigned int signal)
+enum MHDeviceState mh_f7_usart_signal(void* handle, unsigned int signal)
 {
 	(void)signal;
 	enum MHDeviceState result = eDSPermitted;

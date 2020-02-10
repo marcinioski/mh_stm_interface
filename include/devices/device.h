@@ -8,8 +8,9 @@
 #ifndef MH_DEVICE_H_
 #define MH_DEVICE_H_
 
+#include "device_private.h"
 #include "device_state.h"
-#include "mh/devices/device_io.h"
+#include "device_io.h"
 
 /* ****************************************************************************
  * @param: MH_DEVICES_MAX
@@ -117,9 +118,9 @@ void mh_stop_startup_devices(void);
  * @brief macro used for calling read method on device
  ******************************************************************************
  */
-#define MH_DEVICE_IO_READ(X, BUFFER, BUFFER_LEN, LEN) do { \
+#define MH_DEVICE_IO_READ(X, HANDLE, BUFFER, BUFFER_LEN, LEN) do { \
 	if (((pmh_device_t)X)->io.read) \
-			((pmh_device_t)X)->state = ((pmh_device_t)X)->io.read(BUFFER, BUFFER_LEN, LEN); \
+			((pmh_device_t)X)->io.state = ((pmh_device_t)X)->io.read(HANDLE, BUFFER, BUFFER_LEN, LEN); \
 	}while(0)
 
 /**
@@ -128,9 +129,9 @@ void mh_stop_startup_devices(void);
  * @brief macro used for calling write method on device
  ******************************************************************************
  */
-#define MH_DEVICE_IO_WRITE(X, BUFFER, BUFFER_LEN, LEN) do { \
+#define MH_DEVICE_IO_WRITE(X, HANDLE, BUFFER, BUFFER_LEN, LEN) do { \
 	if (((pmh_device_t)X)->io.write) \
-			((pmh_device_t)X)->state = ((pmh_device_t)X)->io.write(BUFFER, BUFFER_LEN, LEN); \
+			((pmh_device_t)X)->io.state = ((pmh_device_t)X)->io.write(HANDLE, BUFFER, BUFFER_LEN, LEN); \
 	}while(0)
 
 /**
@@ -139,9 +140,9 @@ void mh_stop_startup_devices(void);
  * @brief macro used for calling signal method on device
  ******************************************************************************
  */
-#define MH_DEVICE_IO_SIGNAL(X, SIGNAL) do { \
+#define MH_DEVICE_IO_SIGNAL(X, HANDLE, SIGNAL) do { \
 	if (((pmh_device_t)X)->io.signal) \
-			((pmh_device_t)X)->state = ((pmh_device_t)X)->io.signal(SIGNAL); \
+			((pmh_device_t)X)->io.state = ((pmh_device_t)X)->io.signal(HANDLE, SIGNAL); \
 	}while(0)
 
 #endif /* MH_DEVICE_H_ */

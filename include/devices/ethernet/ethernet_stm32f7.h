@@ -54,7 +54,8 @@ enum MHDeviceState mh_f7_ethernet_stop(void* arg);
 	{ \
 		NULL, \
 		NULL, \
-		NULL \
+		NULL, \
+		eDSUnknown \
 	}, \
 	0, \
 	NULL, \

@@ -12,6 +12,7 @@
 #include "mh/devices/device_list.h"
 #include "mh/devices/device_state.h"
 #include "mh/devices/usart/usart_private.h"
+#include "mh/devices/usart/usart_io.h"
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_hal_uart.h"
 #include "stm32f7xx_hal_usart.h"
@@ -48,35 +49,38 @@ enum MHDeviceState mh_f7_usart_stop(void* arg);
  ******************************************************************************
  * @method mh_f7_usart_write
  * @brief method is used to writing data to usart device
+ * @param handle - handler to device
  * @param buffer - pointer to data
  * @param buffer_len - length of data to write
  * @param len - len of write data
  * @return device state
  ******************************************************************************
  */
-enum MHDeviceState mh_f7_usart_write(const char* buffer, const size_t buffer_len, size_t* len);
+enum MHDeviceState mh_f7_usart_write(void* handle, const char* buffer, const size_t buffer_len, size_t* len);
 
 /**
  ******************************************************************************
  * @method mh_f7_usart_read
  * @brief method is used to reading data from usart device
+ * @parma handle - handler to device
  * @param buffer - pointer to data
  * @param buffer_len - length of buffer
  * @param len - len of read data
  * @return device state
  ******************************************************************************
  */
-enum MHDeviceState mh_f7_usart_read(char* buffer, const size_t buffer_len, size_t* len);
+enum MHDeviceState mh_f7_usart_read(void* handle, char* buffer, const size_t buffer_len, size_t* len);
 
 /**
  ******************************************************************************
  * @method mh_f7_usart_signal
  * @brief method is used to send signals to usart device
+ * @parma handle - handler to device
  * @param signal - signal id
  * @return device state
  ******************************************************************************
  */
-enum MHDeviceState mh_f7_usart_signal(unsigned int signal);
+enum MHDeviceState mh_f7_usart_signal(void* handle, unsigned int signal);
 
 #define USART_DEVICE { \
 	&mh_f7_usart_init, \
@@ -85,7 +89,8 @@ enum MHDeviceState mh_f7_usart_signal(unsigned int signal);
 	{ \
 		&mh_f7_usart_read, \
 		&mh_f7_usart_write, \
-		&mh_f7_usart_signal \
+		&mh_f7_usart_signal, \
+		eDSUnknown, \
 	}, \
 	0, \
 	NULL, \
