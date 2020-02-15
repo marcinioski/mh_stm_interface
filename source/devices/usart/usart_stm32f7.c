@@ -23,6 +23,14 @@ extern void user_usart_error_callback(UART_HandleTypeDef*);
 UART_HandleTypeDef g_mh_uart3_handle;
 #endif
 
+#if MH_ENABLE_USART4
+/******************************************************************************
+ * @variable g_mh_uart4_handle
+ * @brief global uart handle
+ *****************************************************************************/
+UART_HandleTypeDef g_mh_uart4_handle;
+#endif
+
 #if MH_ENABLE_USART
 /******************************************************************************
  * @variable g_mh_usart_handle
@@ -109,7 +117,9 @@ mh_usart_private_t g_mh_usart_private = {
 #endif
 
 #if MH_ENABLE_USART4
-	, &g_mh_uart4_handle
+	, { &g_mh_uart4_handle,
+		2
+	}
 #endif
 };
 

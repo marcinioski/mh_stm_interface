@@ -90,7 +90,7 @@
  * @brief variable enables usart device
  *****************************************************************************/
 #define MH_ENABLE_USART3 1
-#define MH_ENABLE_USART4 0
+#define MH_ENABLE_USART4 1
 
 /******************************************************************************
  * @param MH_ENABLE_USART_IRQ

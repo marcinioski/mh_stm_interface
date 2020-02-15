@@ -25,6 +25,10 @@ typedef struct
 	mh_device_private_t usart3;
 #endif
 
+#if MH_ENABLE_USART4
+	mh_device_private_t usart4;
+#endif
+
 } mh_usart_private_t, *pmh_usart_private_t;
 
 #endif /* MH_USART_PRIVATE_H_ */
